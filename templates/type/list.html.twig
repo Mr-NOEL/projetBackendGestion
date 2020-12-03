@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block title %}GEMO{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="text-center">
+            <h4>Récapitulatifs des Types de Vetements (Table 2):</h4>
+            <br>
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">id</th>
+                <th class="text-center">libelle</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if types is not empty %}
+                {% for type in types %}
+                    <tr>
+                        <td class="text-center">{{ type.id }}</td>
+                        <td class="text-center">{{ type.libelle }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>Pas de type</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <a><strong>Voir les détails:</strong></a>
+        <a href="{{ path('type_showdetails')}}" class="btn btn-primary">DETAILS</a>
+    </div>
+{% endblock %}

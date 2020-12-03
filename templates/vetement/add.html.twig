@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container-fluid">
+        <form action="{{ path("vetement_add") }}" method="POST">
+            <div class="text-left">
+                <legend>Créer un vetement</legend><br>
+                <div class="form-group">
+                    {{ include('vetement/_formVetement.html.twig', {button: 'Valider'}) }}
+                    <br>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

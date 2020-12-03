@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container-fluid">
+
+            <div class="form-group">
+                {{ include('vetement_v2/_formVetement.html.twig', {button: 'Valider'}) }}
+            </div>
+    </div>
+{% endblock %}

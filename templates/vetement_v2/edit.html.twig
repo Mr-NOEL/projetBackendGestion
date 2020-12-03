@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container">
+        <form action="{{ path("vetement_v2_edit_valid", {'id' : vetement.id}) }}" method="POST">
+            <legend>Modifier un vetement</legend>
+            <div class="form-group">
+                {{ include('vetement_v2/_formVetement.html.twig', {button: 'Editer'}) }}
+                <a type="button" class="btn btn-primary" href="{{ path('vetement_v2_list') }}">Annuler</a>
+            </div>
+            <input type="hidden" name="token" value="{{ csrf_token('form_vetement') }}">
+            <input type="hidden" name="id" value="{{ vetement.id }}">
+            <input type="hidden" name="_method" value="PUT">
+        </form>
+    </div>
+{% endblock %}

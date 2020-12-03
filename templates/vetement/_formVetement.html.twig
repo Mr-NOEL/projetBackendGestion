@@ -1,0 +1,131 @@
+<!-- Champ descriptif: -->
+<div class="form-row">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="descriptif">Descriptif</label>
+                </div>
+                <input name="descriptif" type="text" size="15" value="{% if vetement is defined %}{{ vetement.descriptif }}{% else %}{{donnees.descriptif|default('')}}{% endif %}" class="form-control {% if errors.descriptif is defined %}is-invalid{% endif %}"/>{% if errors.descriptif is defined %}<div class="invalid-feedback">{{errors.descriptif}}</div>{% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Champ Type: -->
+<div class="form-row">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="type_id">Type</label>
+                </div>
+                <select name="type_id" class="form-control {% if errors.type_id is defined %}is-invalid{% endif %}">
+                    {% if vetement.type.id is not defined or vetement.type.id is empty %}
+                        <option value="">Sélectionnez un vetement</option>
+                    {% endif %}
+                    {% for type in types %}
+                        <option value="{{ type.id }}"
+                                {% if vetement is defined and vetement.type.id == type.id %}selected
+                                {% else %}
+                                    {{ donnees.type_id|default('') }}
+                                {% endif %}>
+                            {{ type.libelle }}
+                        </option>
+                    {% endfor %}
+                </select>
+                {% if errors.type_id is defined %}
+                    <div class="invalid-feedback">{{errors.type_id}}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Champ prix de base: -->
+<div class="form-row">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="prixDeBase">Prix de base</label>
+                </div>
+                <input name="prixDeBase" type="text" size="15" value="
+{% if vetement is defined %}
+{{ vetement.prixDeBase }}
+{% else %}
+{{donnees.prixDeBase|default('')}}
+{% endif %}" class="form-control
+{% if errors.prixDeBase is defined %}
+is-invalid
+{% endif %}"/>
+                {% if errors.prixDeBase is defined %}
+                    <div class="invalid-feedback">
+                        {{errors.prixDeBase}}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Champ taille: -->
+<div class="form-row">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="taille">Taille</label>
+                </div>
+                <input name="taille" type="text" size="18" value="
+{% if vetement is defined %}
+{{ vetement.taille }}
+{% else %}{{donnees.taille|default('')}}
+{% endif %}
+" class="form-control
+{% if errors.taille is defined %}
+is-invalid
+{% endif %}"/>
+                {% if errors.taille is defined %}
+                    <div class="invalid-feedback">{{errors.taille}}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Champ date achat: -->
+<div class="form-row">
+    <div class="col-12 col-md-6">
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="dateAchat">Date achat</label>
+                </div>
+                <input name="dateAchat" type="text" size="18" value="
+{% if vetement is defined %}
+{{ vetement.dateAchat|date("d/m/Y") }}
+{% else %}
+{{donnees.dateAchat|default('')}}
+{% endif %}
+" class="form-control
+{% if errors.dateAchat is defined %}
+is-invalid
+{% endif %}"/>
+                {% if errors.dateAchat is defined %}
+                    <div class="invalid-feedback">{{errors.dateAchat}}</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if button is defined and button == 'Editer' %}
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="id" value="{{ vetement.id | default('')}}">
+{%  endif %}
+
+<input type="hidden" name="token" value="{{ csrf_token('form_vetement') }}">
+<div class="text-left">
+    <button type="submit" class="btn btn-primary">{{ button|default('Valider') }}</button>
+    <a type="button" class="btn btn-primary" href="{{ path('vetement_list') }}">Annuler</a>
+</div>

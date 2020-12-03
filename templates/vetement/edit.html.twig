@@ -1,0 +1,11 @@
+{% extends "base.html.twig" %}
+{% block body %}
+    <div class="container">
+        <form action="{{ path("vetement_edit_valid", {'id' : vetement.id}) }}" method="POST">
+            <legend>Modifier un vetement</legend>
+            <div class="form-group">
+                {{ include('vetement/_formVetement.html.twig', {button: 'Editer'}) }}
+            </div>
+        </form>
+    </div>
+{% endblock %}

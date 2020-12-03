@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GEMO{% endblock %}
+
+{% block body %}
+    <h3 class="text-center">Récapitulatifs des Types de Vetements (Table 2):</h3>
+    <br>
+    <table class="table dataTable my-0" id="dataTable">
+        <thead>
+        <tr>
+            <th>libellés</th>
+            <th>nbVetements</th>
+            <th>PrixMoyen</th>
+            <th>PrixMin</th>
+            <th>PrixMax</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for type in types %}
+            <tr>
+                <td>{{ type.libelle }}</td>
+                <td>{{ type.nbVetement }}</td>
+                <td>{{ type.PrixMoyen|number_format(2) }} €</td>
+                <td>{{ type.PrixMin }} €</td>
+                <td>{{ type.PrixMax }} €</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <div class="text-center">
+        <a><strong>Retourner au récapitulatifs des Types de Vetements (Table 2):</strong></a>
+            <a href="{{ path('type_list')}}" class="btn btn-primary">RETURN</a>
+    </div>
+{% endblock %}

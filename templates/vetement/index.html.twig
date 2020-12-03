@@ -1,0 +1,68 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="text-center">
+            <h4>Récapitulatifs des Vetements (Table 1) V1:</h4>
+        </div>
+        <br>
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <div class="text-left">
+            <a><strong>Ajouter un vetement :</strong></a>
+            <a href="{{ path('vetement_add')}}" class="btn btn-primary">ADD</a>
+        </div>
+        <br>
+        {% endif %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="text-center">id</th>
+                <th class="text-center">type_id</th>
+                <th class="text-center">descriptif</th>
+                <th class="text-center">prix_de_base</th>
+                <th class="text-center">taille</th>
+                <th class="text-center">date_achat</th>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <th class="text-center">Gestion</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% if vetements is not empty %}
+                {% for vetement in vetements %}
+                    <tr>
+                        <td class="text-center">{{ vetement.id }}</td>
+                        <td class="text-center">{{ vetement.type.libelle | default("id Null") }}</td>
+                        <td class="text-center">{{ vetement.descriptif }}</td>
+                        <td class="text-center">{{ vetement.prixDeBase }}</td>
+                        <td class="text-center">{{ vetement.taille }}</td>
+                        <td class="text-center">{{ vetement.dateAchat|date('d/m/Y') }}</td>
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <td>
+                            <div class="text-center">
+                                <a href="{{ path('vetement_edit',{'id': vetement.id })}}" class="btn btn-primary">Editer</a>
+                                <form action="{{ path('vetement_delete') }}" method="POST" style="display:inline" onsubmit="return confirm('Etes-vous sur de votre choix ?');">
+                                    <input type="hidden" name="token" value="{{ csrf_token('vetement_delete') }}">
+                                    <input type="hidden" name="id" value="{{ vetement.id }}">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" class="btn btn-warning">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>Pas de vetements</td>
+                </tr>
+            {% endif %}
+            {% for message in app.flashes('info_vetement') %}
+                <div class="alert alert-info">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

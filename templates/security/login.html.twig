@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authentification | Connexion :{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row min-vh">
+            <div class="col-12 flex-center-column">
+                <div class="border p-5">
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <h1 class="heading-stylized text-center">Déconnexion</h1>
+                    {% else %}
+                        <h1 class="heading-stylized text-center">Connexion</h1>
+                    {% endif %}
+                    <form method="post" autocomplete="off">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <h5 class="heading-stylized">Vous êtes connecté en tant que {{ app.user.username }}</h5>
+                            <button class="btn btn-primary w-100 font-weight-bolder"><a class="text-white" href="{{ path('app_logout') }}">Se déconnecter</a></button>
+                        {% else %}
+                            <div class="form-group">
+                                <label for="username">Nom d'utilisateur</label>
+                                <input name="username" type="text" class="form-control" id="username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Mot de passe</label>
+                                <input name="password" type="password" class="form-control" id="password">
+                            </div>
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                            <button type="submit" class="btn btn-primary w-100 font-weight-bolder">Se connecter</button>
+                        {% endif %}
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>const page = "navAuth"</script>
+{% endblock %}

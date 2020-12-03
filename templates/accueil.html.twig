@@ -1,0 +1,19 @@
+{% extends "base.html.twig" %}
+
+
+{% block body %}
+    <p class="text-center">Bienvenue sur notre site internet !</p>
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+        <h1 class="text-center">
+            <br>
+            Vous êtes connecté en tant que {{ app.user.username }}
+        </h1>
+    {% else %}
+        <p class="text-center">
+            <br>
+            <strong>
+                Vous n'êtes pas connecté, pour avoir accès à toutes les fonctionnalitées veuillez vous authentifier.
+            </strong>
+        </p>
+    {% endif %}
+{% endblock %}
